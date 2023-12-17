@@ -3,13 +3,11 @@
 import { EmailContent, EmailProductInfo, NotificationType } from "@/Types";
 import nodemailer from "nodemailer";
 
-
-
 const Notification = {
   WELCOME: "WELCOME",
   CHANGE_OF_STOCK: "CHANGE_OF_STOCK",
   LOWEST_PRICE: "LOWEST_PRICE",
-  THRESHOLD_MET: "THRESHOLD_MET"  ,
+  THRESHOLD_MET: "THRESHOLD_MET",
 };
 
 export async function generateEmailBody(
@@ -104,9 +102,17 @@ export const sendEmail = async (
     subject: emailContent.subject,
   };
 
-  transporter.sendMail(mailOptions, (error: any, info: any) => {
-    if (error) return console.log(error);
+  // transporter.sendMail(mailOptions, (error: any, info: any) => {
+  //   if (error) return console.log(error);
 
-    console.log("Email sent: ", info);
+  //   console.log("Email sent: ", info);
+  // });
+
+  await new Promise((resolve, reject) => {
+    transporter.sendMail(mailOptions, (error: any, info: any) => {
+      if (error) return console.log(error);
+
+      console.log("Email sent: ", info);
+    });
   });
 };
